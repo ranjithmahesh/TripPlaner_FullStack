@@ -3,7 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { Feather } from "@expo/vector-icons";
-<Text>Search</Text>;
+
 import {
   ScrollView,
   View,
@@ -14,14 +14,11 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import DatePicker from "react-native-date-ranges";
-// import { BottomModal } from "react-native-modals";
-// import { ModalFooter } from "react-native-modals";
-// import { ModalButton } from "react-native-modals";
-// import { ModalTitle } from "react-native-modals";
-// import { SlideAnimation } from "react-native-modals";
-// import { ModalContent } from "react-native-modals";
+
 const HomeScreen = () => {
   const navigation = useNavigation();
+
+  const [selectedDates, setSelectedDates] = useState();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -160,8 +157,7 @@ const HomeScreen = () => {
               backgroundColor: "#427D71",
               borderColor: "black",
               paddingHorizontal: 10,
-       
-         
+
               paddingVertical: 15,
             }}
           >
@@ -178,7 +174,105 @@ const HomeScreen = () => {
           </Pressable>
         </View>
 
-        <Text>Travel More and speend Less</Text>
+        <Text style={{ marginHorizontal: 20, fontSize: 17, fontWeight: "500" }}>
+          Travel More and speend Less
+        </Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <Pressable
+            style={{
+              width: 200,
+              height: 150,
+              marginTop: 10,
+              backgroundColor: "#427D71",
+              borderRadius: 10,
+              paddingHorizontal: 10,
+              marginHorizontal: 20,
+            }}
+          >
+            <Text
+              style={{
+                color: "white",
+                fontSize: 15,
+                fontWeight: "bold",
+                marginVertical: 7,
+              }}
+            >
+              Genius
+            </Text>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 15,
+                fontWeight: "500",
+                marginVertical: 7,
+              }}
+            >
+              Your are at Genius level one in our loyalty program
+            </Text>
+          </Pressable>
+          <Pressable
+            style={{
+              width: 200,
+              height: 150,
+              marginTop: 10,
+              borderColor: "#E0E0E0",
+              borderWidth: 2,
+              borderRadius: 10,
+              paddingHorizontal: 20,
+              marginHorizontal: 20,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "bold",
+                marginVertical: 7,
+              }}
+            >
+              Genius
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "500",
+                marginVertical: 7,
+              }}
+            >
+              Your are at Genius level one in our loyalty program
+            </Text>
+          </Pressable>
+          <Pressable
+            style={{
+              width: 200,
+              height: 150,
+              marginTop: 10,
+              borderColor: "#E0E0E0",
+              borderWidth: 2,
+              borderRadius: 10,
+              paddingHorizontal: 20,
+              marginHorizontal: 20,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "bold",
+                marginVertical: 7,
+              }}
+            >
+              Genius
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "500",
+                marginVertical: 7,
+              }}
+            >
+              Your are at Genius level one in our loyalty program
+            </Text>
+          </Pressable>
+        </ScrollView>
       </ScrollView>
     </View>
   );
