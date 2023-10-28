@@ -8,6 +8,10 @@ import BookingScreen from "./Screens/BookingScreen";
 import HomeScreen from "./Screens/HomeScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import SavedScreen from "./Screens/SavedScreen";
+import SearchScreen from "./Screens/SearchScreen";
+import PlacesScreen from "./Screens/PlacesScreen";
+import ConfirmationScreen from "./Screens/ConmofmationScreen";
+import TaskScreen from "./Screens/TaskScreen";
 
 const StackNavigater = () => {
   const Stack = createNativeStackNavigator();
@@ -82,7 +86,19 @@ const StackNavigater = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Main" component={BottomTabs} options={{headerShown:false}}/>
+        <Stack.Screen
+          name="Main"
+          component={BottomTabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Places" component={PlacesScreen} />
+        <Stack.Screen name="Confirmation" component={ConfirmationScreen} />
+        <Stack.Screen name="AddTask" component={TaskScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
