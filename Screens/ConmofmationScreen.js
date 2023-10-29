@@ -1,12 +1,12 @@
-import React, { useLayoutEffect, useEffect, useState } from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useLayoutEffect } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
-import { addTrip, savedPlaces } from "../redux/SavedReduser";
-import { setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
-import { auth, db } from "../firebase1";
+import { addTrip } from "../redux/SavedReduser";
 
 const ConfirmationScreen = () => {
+  const route = useRoute();
+
   const navigation = useNavigation();
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -25,38 +25,14 @@ const ConfirmationScreen = () => {
       },
     });
   }, []);
-  const route = useRoute();
   const dispatch = useDispatch();
-  const uid = auth.currentUser.uid;
 
   const confirmBooking = async () => {
-    // Dispatch action to add the trip to your local SQLite database
     dispatch(addTrip(route.params));
 
-    try {
-      // Check if the document already exists in Firestore
-      const docRef = doc(db, "users", uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        // Update the existing document in Firestore
-        await updateDoc(docRef, {
-          bookingDetails: route.params,
-        });
-      } else {
-        // Create a new document in Firestore
-        await setDoc(docRef, {
-          bookingDetails: route.params,
-        });
-      }
-
-      // Navigate to the Main screen
-      navigation.navigate("Main", {
-        id: route.params.id,
-      });
-    } catch (error) {
-      console.error("Error while confirming booking:", error);
-    }
+    navigation.navigate("Main", {
+      id: route.params.id,
+    });
   };
   return (
     <View>
@@ -135,7 +111,7 @@ const ConfirmationScreen = () => {
                 color: "gray",
               }}
             >
-              Till
+              To
             </Text>
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>
               {route.params.selectedDates.endDate}
@@ -148,10 +124,13 @@ const ConfirmationScreen = () => {
           style={{
             backgroundColor: "#427D71",
             width: 120,
-            padding: 5,
+            padding: 10,
             marginHorizontal: 12,
             marginBottom: 20,
             borderRadius: 4,
+            alignItems: "center",
+         alignSelf:"center",
+            marginTop: 10,
           }}
         >
           <Text

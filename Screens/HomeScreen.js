@@ -83,6 +83,8 @@ const HomeScreen = () => {
         id: id,
       });
     }
+
+    setDestination(""), setName(""), setSelectedDates();
   };
   return (
     <View>
@@ -208,7 +210,7 @@ const HomeScreen = () => {
                 color: "white",
               }}
             >
-              Search
+              Confirm Trip
             </Text>
           </Pressable>
         </View>

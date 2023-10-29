@@ -133,6 +133,8 @@ const TaskScreen = () => {
     } else {
       console.log("something went wront will gataring info");
     }
+
+    setTask(""), setSelectedDate(new Date()), setSelectedTime("");
   };
 
   return (

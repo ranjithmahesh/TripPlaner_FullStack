@@ -2,29 +2,31 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
-  KeyboardAvoidingView,
   Pressable,
   TextInput,
+  SafeAreaView,
+  KeyboardAvoidingView,
   Alert,
 } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { auth, db } from "../firebase1";
-import { setDoc, doc } from "firebase/firestore";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { doc, setDoc } from "firebase/firestore";
 const RegisterScreen = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const navigation = useNavigation();
   const register = () => {
-    if (email === "" || password === "" || phone === "") {
-      Alert.alert(
-        "Invalid Detials",
-        "Please enter all the credentials",
+    if (email === "" || password === "" || phone === "" || name === "") {
+      return Alert.alert(
+        "Invalid Details",
+        "Please fill all the details",
         [
           {
             text: "Cancel",
@@ -36,27 +38,51 @@ const RegisterScreen = () => {
         { cancelable: false }
       );
     }
-    createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredentials) => {
-        const user = userCredentials._tokenResponse.email;
-        const uid = auth.currentUser.uid;
 
-        setDoc(doc(db, "users", `${uid}`), {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        console.log("user credential", userCredential);
+        const user = userCredential._tokenResponse.email;
+        const myUserUid = auth.currentUser.uid;
+
+        setDoc(doc(db, "users", `${myUserUid}`), {
           email: user,
           phone: phone,
+          name: name,
         });
-      }
-    );
-
-    navigation.goBack();
+        // ...
+      })
+      .catch(() => {
+        Alert.alert(
+          "Authentiction ERROR",
+          "User Already exist ",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel",
+            },
+            {
+              text: "OK",
+              onPress: () => {
+                setEmail(""), setPassword(""), console.log("Cancel Pressed");
+              },
+            },
+          ],
+          { cancelable: false }
+        );
+        navigation.goBack();
+      });
   };
   return (
     <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: "white",
-        padding: 10,
         alignItems: "center",
+        padding: 10,
       }}
     >
       <KeyboardAvoidingView>
@@ -67,110 +93,127 @@ const RegisterScreen = () => {
             marginTop: 100,
           }}
         >
-          <Text style={{ color: "#427D71", fontSize: 17, fontWeight: "700" }}>
+          <Text style={{ fontSize: 20, color: "#427D71", fontWeight: "bold" }}>
             Register
           </Text>
 
-          <Text style={{ marginTop: 15, fontSize: 18, fontWeight: "500" }}>
-            Create an Account
+          <Text style={{ fontSize: 18, marginTop: 8, fontWeight: "600" }}>
+            Create a new Account
           </Text>
         </View>
 
         <View style={{ marginTop: 50 }}>
-          <View>
-            <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
-              Email
-            </Text>
-
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Ionicons name="person-add-outline" size={24} color="black" />
             <TextInput
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              placeholder="enter your email id"
-              placeholderTextColor={"black"}
+              placeholder="Name"
+              value={name}
+              onChangeText={(text) => setName(text)}
+              placeholderTextColor="black"
               style={{
-                fontSize: email ? 18 : 18,
-                borderBottomColor: "gray",
+                fontSize: name ? 18 : 18,
                 borderBottomWidth: 1,
-                marginVertical: 10,
+                borderBottomColor: "gray",
+                marginLeft: 13,
                 width: 300,
+                marginVertical: 10,
               }}
             />
           </View>
 
-          <View style={{ marginTop: 15 }}>
-            <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
-              Password
-            </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <MaterialCommunityIcons
+              name="email-outline"
+              size={24}
+              color="black"
+            />
+            <TextInput
+              placeholder="Email"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              placeholderTextColor="black"
+              style={{
+                fontSize: email ? 18 : 18,
+                borderBottomWidth: 1,
+                borderBottomColor: "gray",
+                marginLeft: 13,
+                width: 300,
+                marginVertical: 10,
+              }}
+            />
+          </View>
 
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Ionicons name="key-outline" size={24} color="black" />
             <TextInput
               value={password}
               onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}
               placeholder="Password"
-              placeholderTextColor={"black"}
+              placeholderTextColor="black"
               style={{
                 fontSize: password ? 18 : 18,
-                borderBottomColor: "gray",
                 borderBottomWidth: 1,
-                marginVertical: 10,
+                borderBottomColor: "gray",
+                marginLeft: 13,
                 width: 300,
+                marginVertical: 20,
               }}
             />
           </View>
 
-          <View style={{ marginTop: 15 }}>
-            <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
-              Phone
-            </Text>
-
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Feather name="phone" size={24} color="black" />
             <TextInput
+              keyboardType="numeric"
               value={phone}
               onChangeText={(text) => setPhone(text)}
-              placeholder="enter your Phone No"
-              placeholderTextColor={"black"}
+              placeholder="Phone No"
+              placeholderTextColor="black"
               style={{
                 fontSize: password ? 18 : 18,
-                borderBottomColor: "gray",
                 borderBottomWidth: 1,
-                marginVertical: 10,
+                borderBottomColor: "gray",
+                marginLeft: 13,
                 width: 300,
+                marginVertical: 10,
               }}
             />
           </View>
-        </View>
 
-        <Pressable
-          onPress={register}
-          style={{
-            width: 200,
-            backgroundColor: "#427D71",
-            padding: 15,
-            borderRadius: 7,
-            marginTop: 50,
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          <Text
+          <Pressable
+            onPress={register}
             style={{
-              textAlign: "center",
-              color: "white",
-              fontSize: 17,
-              fontWeight: "bold",
+              width: 200,
+              backgroundColor: "#427D71",
+              padding: 15,
+              borderRadius: 7,
+              marginTop: 50,
+              marginLeft: "auto",
+              marginRight: "auto",
             }}
           >
-            Register
-          </Text>
-        </Pressable>
+            <Text style={{ fontSize: 18, textAlign: "center", color: "white" }}>
+              Register
+            </Text>
+          </Pressable>
 
-        <Pressable
-          onPress={() => navigation.goBack()}
-          style={{ marginTop: 20 }}
-        >
-          <Text style={{ textAlign: "center", color: "gray", fontSize: 17 }}>
-            Already have an account? Sign In
-          </Text>
-        </Pressable>
+          <Pressable
+            onPress={() => navigation.goBack()}
+            style={{ marginTop: 20 }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 17,
+                color: "gray",
+                fontWeight: "500",
+              }}
+            >
+              Already have a account? Sign in
+            </Text>
+          </Pressable>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

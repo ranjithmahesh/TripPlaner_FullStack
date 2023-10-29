@@ -5,15 +5,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet } from "react-native";
 import BookingScreen from "./Screens/BookingScreen";
-import HomeScreen from "./Screens/HomeScreen";
-import ProfileScreen from "./Screens/ProfileScreen";
-import SavedScreen from "./Screens/SavedScreen";
-import SearchScreen from "./Screens/SearchScreen";
-import PlacesScreen from "./Screens/PlacesScreen";
 import ConfirmationScreen from "./Screens/ConmofmationScreen";
-import TaskScreen from "./Screens/TaskScreen";
+import HomeScreen from "./Screens/HomeScreen";
 import LoginScreen from "./Screens/LoginScreen";
+import ProfileScreen from "./Screens/ProfileScreen";
 import RegisterScreen from "./Screens/RegisterScreen";
+
+import TaskScreen from "./Screens/TaskScreen";
 
 const StackNavigater = () => {
   const Stack = createNativeStackNavigator();
@@ -36,20 +34,7 @@ const StackNavigater = () => {
               ),
           }}
         />
-        <Tab.Screen
-          name="Saved"
-          component={SavedScreen}
-          options={{
-            tabBarLabel: "Saved",
-            headerShown: false,
-            tabBarIcon: ({ focused }) =>
-              focused ? (
-                <AntDesign name="heart" size={24} color="#427D71" />
-              ) : (
-                <AntDesign name="hearto" size={24} color="black" />
-              ),
-          }}
-        />
+
         <Tab.Screen
           name="Bookings"
           component={BookingScreen}
@@ -103,12 +88,7 @@ const StackNavigater = () => {
           component={BottomTabs}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="Search"
-          component={SearchScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="Places" component={PlacesScreen} />
+
         <Stack.Screen name="Confirmation" component={ConfirmationScreen} />
         <Stack.Screen name="AddTask" component={TaskScreen} />
       </Stack.Navigator>
