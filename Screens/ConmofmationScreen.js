@@ -1,15 +1,12 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useEffect, useState } from "react";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { MaterialIcons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { addTrip, savedPlaces } from "../redux/SavedReduser";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase1";
 
 const ConfirmationScreen = () => {
-  const route = useRoute();
-
   const navigation = useNavigation();
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -28,25 +25,38 @@ const ConfirmationScreen = () => {
       },
     });
   }, []);
+  const route = useRoute();
   const dispatch = useDispatch();
-
   const uid = auth.currentUser.uid;
+
   const confirmBooking = async () => {
+    // Dispatch action to add the trip to your local SQLite database
     dispatch(addTrip(route.params));
 
-    await setDoc(
-      doc(db, "users", `${uid}`),
-      {
-        bookingDetails: { ...route.params },
-      },
-      {
-        merge: true,
-      }
-    );
+    try {
+      // Check if the document already exists in Firestore
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
 
-    navigation.navigate("Main", {
-      id: route.params.id,
-    });
+      if (docSnap.exists()) {
+        // Update the existing document in Firestore
+        await updateDoc(docRef, {
+          bookingDetails: route.params,
+        });
+      } else {
+        // Create a new document in Firestore
+        await setDoc(docRef, {
+          bookingDetails: route.params,
+        });
+      }
+
+      // Navigate to the Main screen
+      navigation.navigate("Main", {
+        id: route.params.id,
+      });
+    } catch (error) {
+      console.error("Error while confirming booking:", error);
+    }
   };
   return (
     <View>
