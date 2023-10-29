@@ -13,11 +13,11 @@ const TaskCard = ({ tripId }) => {
     return trip ? trip.tasks : [];
   });
   console.log(tasks);
-  // const deletTaskHandler = (tripId, Id) => {
-  //   dispatch(deleteTask({ tripId, Id }));
-  //   console.log("done");
-  //   console.log(tripId, Id);
-  // };
+  const deletTaskHandler = (tripId, Id) => {
+    dispatch(deleteTask({ tripId, Id }));
+    console.log("done");
+    console.log(tripId, Id);
+  };
 
   return (
     <View>
