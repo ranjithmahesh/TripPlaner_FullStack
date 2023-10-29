@@ -12,6 +12,8 @@ import SearchScreen from "./Screens/SearchScreen";
 import PlacesScreen from "./Screens/PlacesScreen";
 import ConfirmationScreen from "./Screens/ConmofmationScreen";
 import TaskScreen from "./Screens/TaskScreen";
+import LoginScreen from "./Screens/LoginScreen";
+import RegisterScreen from "./Screens/RegisterScreen";
 
 const StackNavigater = () => {
   const Stack = createNativeStackNavigator();
@@ -86,6 +88,16 @@ const StackNavigater = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Main"
           component={BottomTabs}

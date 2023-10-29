@@ -3,7 +3,7 @@ import { useRoute } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTask } from "../redux/SavedReduser";
+import { completeTask, deleteTask } from "../redux/SavedReduser";
 
 const TaskCard = ({ tripId }) => {
   const route = useRoute();
@@ -18,7 +18,10 @@ const TaskCard = ({ tripId }) => {
     console.log("done");
     console.log(tripId, Id);
   };
-
+  
+  const toggleCompletion = (tripId, taskId) => {
+    dispatch(completeTask({ tripId, taskId }));
+  };
   return (
     <View>
       {tasks
@@ -92,7 +95,12 @@ const TaskCard = ({ tripId }) => {
                 justifyContent: "space-between",
               }}
             >
-              <AntDesign name="checkcircleo" size={26} color="black" />
+              <AntDesign
+                name={data.completed ? "checkcircle" : "checkcircleo"}
+                size={26}
+                color={data.completed ? "green" : "black"}
+                onPress={() => toggleCompletion(data.tripId, data.id)}
+              />
               <AntDesign
                 name="closecircleo"
                 size={26}

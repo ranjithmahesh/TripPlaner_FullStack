@@ -45,13 +45,26 @@ export const SavedSlice = createSlice({
     },
     completeTask: (state, action) => {
       const { tripId, taskId } = action.payload;
-      const trip = state.booking.find((item) => item.id === tripId);
-      if (trip) {
-        const task = trip.tasks.find((task) => task.id === taskId);
-        if (task) {
-          task.completed = !task.completed;
-        }
-      }
+      return {
+        ...state,
+        booking: state.booking.map((trip) => {
+          if (trip.id === tripId) {
+            return {
+              ...trip,
+              tasks: trip.tasks.map((task) => {
+                if (task.id === taskId) {
+                  return {
+                    ...task,
+                    completed: !task.completed,
+                  };
+                }
+                return task;
+              }),
+            };
+          }
+          return trip;
+        }),
+      };
     },
   },
 });

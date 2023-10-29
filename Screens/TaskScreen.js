@@ -97,7 +97,7 @@ const TaskScreen = () => {
   ];
 
   const handleAddTask = () => {
-    if (!task.name || !task.description || !selectedDate || selectedTime) {
+    if (!task.name || !task.description || !selectedDate || !selectedTime) {
       Alert.alert("Invalid Details", "Please enter all the details", [
         {
           text: "Cancel",
