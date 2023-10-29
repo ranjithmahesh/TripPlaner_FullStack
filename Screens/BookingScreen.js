@@ -7,7 +7,6 @@ import { deleteTrip } from "../redux/SavedReduser";
 import { useRoute } from "@react-navigation/native";
 
 const BookingScreen = () => {
-  // console.log("bookings=" + bookings);
   const bookings = useSelector((state) => state.booking.booking);
   const route = useRoute();
 
@@ -30,9 +29,6 @@ const BookingScreen = () => {
       },
     });
   }, []);
- 
- 
-
 
   return (
     <ScrollView>
@@ -78,7 +74,7 @@ const BookingScreen = () => {
                   <Pressable
                     style={{ marginLeft: "auto" }}
                     onPress={() => {
-                      dispatch(deleteTrip(item.id)), console.log("done");
+                      dispatch(deleteTrip(item.id));
                     }}
                   >
                     <AntDesign name="closecircleo" size={24} color="black" />

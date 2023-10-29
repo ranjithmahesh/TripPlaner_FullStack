@@ -15,18 +15,33 @@ export const SavedSlice = createSlice({
       state.booking = state.booking.filter((item) => item.id !== bookingId);
     },
     addTask: (state, action) => {
-      const { tripId, task } = action.payload;
+      const { tripId, tasks } = action.payload;
       const trip = state.booking.find((item) => item.id === tripId);
       if (trip) {
-        trip.tasks.push(task);
+        trip.tasks.push(tasks);
       }
     },
+
+    // removeFromCart: (state, action) => {
+    //   const removeItem = state.cart.filter((item) => {
+    //     item.id !== action.payload.id;
+    //   });
+    //   state.cart = removeItem;
+    // },
     deleteTask: (state, action) => {
-      const { tripId, taskId } = action.payload;
-      const trip = state.booking.find((item) => item.id === tripId);
-      if (trip) {
-        trip.tasks = trip.tasks.filter((task) => task.id !== taskId);
-      }
+      const { tripId, Id } = action.payload;
+      return {
+        ...state,
+        booking: state.booking.map((trip) => {
+          if (trip.id === tripId) {
+            return {
+              ...trip,
+              tasks: trip.tasks.filter((task) => task.id !== Id),
+            };
+          }
+          return trip;
+        }),
+      };
     },
     completeTask: (state, action) => {
       const { tripId, taskId } = action.payload;

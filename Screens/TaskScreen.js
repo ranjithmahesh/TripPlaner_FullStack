@@ -24,11 +24,9 @@ const TaskScreen = () => {
   const route = useRoute();
   const dispatch = useDispatch();
   const tripId = route.params.id;
-  const tasks = useSelector((state) => {
-    const trip = state.booking.find((item) => item.id === tripId);
-    return trip ? trip.tasks : [];
-  });
-  console.log(tasks);
+
+  const booking = useSelector((state) => state.booking.booking);
+
   const convertedStartdate = new Date(
     route.params.selectedDates.startDate.replace(/\//g, "-")
   );
@@ -70,7 +68,6 @@ const TaskScreen = () => {
       ),
     });
   }, []);
-  // console.log({ task, selectedDate, selectedTime });
 
   const times = [
     {
@@ -111,19 +108,30 @@ const TaskScreen = () => {
       ]);
     }
 
-    if (task.name && task.description && selectedDate && selectedTime) {
+    if (
+      task.name &&
+      task.description &&
+      selectedDate &&
+      selectedTime &&
+      tripId
+    ) {
       const convertedDate = selectedDate.toLocaleDateString("en-GB");
-
-      const task = {
+      const tasks = {
+        tripId: tripId,
         id: Id,
         name: task.name,
+        description: task.description,
         time: selectedTime,
         date: convertedDate,
       };
 
-      dispatch(addTask({ tripId, task }));
-
-      console.log(tripId);
+      if (booking.find((item) => item.id === tripId)) {
+        dispatch(addTask({ tripId, tasks }));
+      } else {
+        console.log("some thing went wrong will dispatching");
+      }
+    } else {
+      console.log("something went wront will gataring info");
     }
   };
 
@@ -280,7 +288,7 @@ const TaskScreen = () => {
             </Text>
           </Pressable>
         </View>
-        <TaskCard />
+        <TaskCard tripId={tripId} Id={Id} />
       </ScrollView>
     </View>
   );
