@@ -7,6 +7,7 @@ import { deleteTrip } from "../redux/SavedReduser";
 import { useRoute } from "@react-navigation/native";
 
 const BookingScreen = () => {
+  // console.log("bookings=" + bookings);
   const bookings = useSelector((state) => state.booking.booking);
   const route = useRoute();
 
@@ -74,7 +75,7 @@ const BookingScreen = () => {
                   <Pressable
                     style={{ marginLeft: "auto" }}
                     onPress={() => {
-                      dispatch(deleteTrip(item.id));
+                      dispatch(deleteTrip(item.id)), console.log("done");
                     }}
                   >
                     <AntDesign name="closecircleo" size={24} color="black" />
@@ -161,9 +162,9 @@ const BookingScreen = () => {
                     }}
                     style={{
                       backgroundColor: "#427D71",
-                      width: 120,
-                      padding: 5,
-                      marginHorizontal: 12,
+                      width: "100%",
+                      padding: 15,
+                    
                       marginBottom: 20,
                       borderRadius: 4,
                     }}

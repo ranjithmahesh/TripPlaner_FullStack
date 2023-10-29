@@ -52,6 +52,7 @@ const RegisterScreen = () => {
           phone: phone,
           name: name,
         });
+        navigation.goBack();
         // ...
       })
       .catch(() => {
@@ -73,7 +74,6 @@ const RegisterScreen = () => {
           ],
           { cancelable: false }
         );
-        navigation.goBack();
       });
   };
   return (

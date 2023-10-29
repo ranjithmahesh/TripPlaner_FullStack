@@ -134,7 +134,7 @@ const TaskScreen = () => {
       console.log("something went wront will gataring info");
     }
 
-    setTask(""), setSelectedDate(new Date()), setSelectedTime("");
+    setTask(""), setSelectedDate(""), setSelectedTime("");
   };
 
   return (

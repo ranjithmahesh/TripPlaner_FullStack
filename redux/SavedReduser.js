@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { saveBookings } from "../services/asyncStorageService";
 
 export const SavedSlice = createSlice({
   name: "booking",
@@ -8,17 +9,20 @@ export const SavedSlice = createSlice({
   reducers: {
     addTrip: (state, action) => {
       state.booking.push({ ...action.payload, tasks: [] });
+      saveBookings(state.booking);
     },
 
     deleteTrip: (state, action) => {
       const bookingId = action.payload;
       state.booking = state.booking.filter((item) => item.id !== bookingId);
+      saveBookings(state.booking);
     },
     addTask: (state, action) => {
       const { tripId, tasks } = action.payload;
       const trip = state.booking.find((item) => item.id === tripId);
       if (trip) {
         trip.tasks.push(tasks);
+        saveBookings(state.booking);
       }
     },
 
@@ -39,7 +43,7 @@ export const SavedSlice = createSlice({
               tasks: trip.tasks.filter((task) => task.id !== Id),
             };
           }
-          return trip;
+          return trip, saveBookings(state.booking);
         }),
       };
     },
@@ -58,11 +62,11 @@ export const SavedSlice = createSlice({
                     completed: !task.completed,
                   };
                 }
-                return task;
+                return task, saveBookings(state.booking);
               }),
             };
           }
-          return trip;
+          return trip, saveBookings(state.booking);
         }),
       };
     },

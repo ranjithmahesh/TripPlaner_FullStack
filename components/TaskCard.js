@@ -18,7 +18,7 @@ const TaskCard = ({ tripId }) => {
     console.log("done");
     console.log(tripId, Id);
   };
-  
+
   const toggleCompletion = (tripId, taskId) => {
     dispatch(completeTask({ tripId, taskId }));
   };
