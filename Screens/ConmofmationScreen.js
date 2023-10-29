@@ -30,21 +30,19 @@ const ConfirmationScreen = () => {
   }, []);
   const dispatch = useDispatch();
 
-
- 
-  //   const uid = auth.currentUser.uid;
+  const uid = auth.currentUser.uid;
   const confirmBooking = async () => {
     dispatch(addTrip(route.params));
 
-    // await setDoc(
-    //   doc(db, "users", `${uid}`),
-    //   {
-    //     bookingDetails: { ...route.params },
-    //   },
-    //   {
-    //     merge: true,
-    //   }
-    // );
+    await setDoc(
+      doc(db, "users", `${uid}`),
+      {
+        bookingDetails: { ...route.params },
+      },
+      {
+        merge: true,
+      }
+    );
 
     navigation.navigate("Main", {
       id: route.params.id,

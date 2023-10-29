@@ -11,35 +11,40 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebase1";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-   
-
-  const login = () => {
-    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      console.log("user credential", userCredential);
-      const user = userCredential.user;
-      console.log("user details", user);
-    });
-  };
-
   useEffect(() => {
-    try {
-      const unsubscribe = auth.onAuthStateChanged((authUser) => {
-        if (authUser) {
+    const getMyObject = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("tokenUser");
+        if (jsonValue) {
           navigation.replace("Main");
         }
-      });
-
-      return unsubscribe;
-    } catch (e) {
-      console.log(e);
-    }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getMyObject();
   }, []);
+
+  const login = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("user details", user);
+        console.log(user.stsTokenManager.accessToken);
+        AsyncStorage.setItem("tokenUser", user.stsTokenManager.accessToken);
+        navigation.replace("Main");
+      })
+      .catch((error) => {
+        console.error("Authentication error:", error);
+      });
+  };
 
   return (
     <SafeAreaView

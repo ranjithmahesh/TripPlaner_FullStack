@@ -47,6 +47,8 @@ const RegisterScreen = () => {
         });
       }
     );
+
+    navigation.goBack();
   };
   return (
     <SafeAreaView
