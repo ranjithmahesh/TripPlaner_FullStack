@@ -2,6 +2,7 @@ import HorizontalDatepicker from "@awrminkhodaei/react-native-horizontal-datepic
 import { Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useLayoutEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import {
   Alert,
   Pressable,
@@ -12,22 +13,27 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask } from "../redux/TaskReduser.js";
 import TaskCard from "../components/TaskCard.js";
+import { addTask } from "../redux/SavedReduser.js";
 
 const TaskScreen = () => {
   const [task, setTask] = useState({});
   const [selectedDate, setSelectedDate] = useState(new Date());
-
   const [selectedTime, setSelectedTime] = useState("");
   const navigation = useNavigation();
   const route = useRoute();
   const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.tasks.tasks);
-
+  const tripId = route.params.id;
+  const tasks = useSelector((state) => {
+    const trip = state.booking.find((item) => item.id === tripId);
+    return trip ? trip.tasks : [];
+  });
+  console.log(tasks);
   const convertedStartdate = new Date(
     route.params.selectedDates.startDate.replace(/\//g, "-")
   );
+
+  const Id = uuidv4();
 
   const Enddate = new Date(
     route.params.selectedDates.endDate.replace(/\//g, "-")
@@ -64,9 +70,7 @@ const TaskScreen = () => {
       ),
     });
   }, []);
-  console.log({ task, selectedDate, selectedTime });
-
-  console.log(tasks.length);
+  // console.log({ task, selectedDate, selectedTime });
 
   const times = [
     {
@@ -110,11 +114,16 @@ const TaskScreen = () => {
     if (task.name && task.description && selectedDate && selectedTime) {
       const convertedDate = selectedDate.toLocaleDateString("en-GB");
 
-      console.log(convertedDate);
+      const task = {
+        id: Id,
+        name: task.name,
+        time: selectedTime,
+        date: convertedDate,
+      };
 
-      dispatch(addTask({ task, selectedTime, convertedDate }));
+      dispatch(addTask({ tripId, task }));
 
-      console.log("Done");
+      console.log(tripId);
     }
   };
 

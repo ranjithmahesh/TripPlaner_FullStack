@@ -3,7 +3,7 @@ import React, { useLayoutEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { savedPlaces } from "../redux/SavedReduser";
+import { addTrip, savedPlaces } from "../redux/SavedReduser";
 import { setDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase1";
 
@@ -29,9 +29,12 @@ const ConfirmationScreen = () => {
     });
   }, []);
   const dispatch = useDispatch();
+
+
+ 
   //   const uid = auth.currentUser.uid;
   const confirmBooking = async () => {
-    dispatch(savedPlaces(route.params));
+    dispatch(addTrip(route.params));
 
     // await setDoc(
     //   doc(db, "users", `${uid}`),

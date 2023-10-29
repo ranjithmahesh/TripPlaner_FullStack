@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useLayoutEffect } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { DeletPlaces } from "../redux/SavedReduser";
+import { deleteTrip } from "../redux/SavedReduser";
 import { useRoute } from "@react-navigation/native";
 
 const BookingScreen = () => {
@@ -30,6 +30,9 @@ const BookingScreen = () => {
       },
     });
   }, []);
+ 
+ 
+
 
   return (
     <ScrollView>
@@ -75,11 +78,7 @@ const BookingScreen = () => {
                   <Pressable
                     style={{ marginLeft: "auto" }}
                     onPress={() => {
-                      dispatch(
-                        DeletPlaces(item.id),
-                        console.log(item.id),
-                        console.log("hi", bookings.length)
-                      );
+                      dispatch(deleteTrip(item.id)), console.log("done");
                     }}
                   >
                     <AntDesign name="closecircleo" size={24} color="black" />
