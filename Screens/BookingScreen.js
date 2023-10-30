@@ -1,18 +1,16 @@
-import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+ import { AntDesign } from "@expo/vector-icons";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useLayoutEffect } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTrip } from "../redux/SavedReduser";
-import { useRoute } from "@react-navigation/native";
 
 const BookingScreen = () => {
-  
   const bookings = useSelector((state) => state.booking.booking);
   const route = useRoute();
-
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -29,7 +27,11 @@ const BookingScreen = () => {
         shadowColor: "transparent",
       },
     });
-  }, []);
+  }, [navigation]);
+
+  const handleDeleteTrip = (tripId) => {
+    dispatch(deleteTrip(tripId));
+  };
 
   return (
     <ScrollView>
@@ -75,7 +77,7 @@ const BookingScreen = () => {
                   <Pressable
                     style={{ marginLeft: "auto" }}
                     onPress={() => {
-                      dispatch(deleteTrip(item.id)), console.log("done");
+                      handleDeleteTrip(item.id);
                     }}
                   >
                     <AntDesign name="closecircleo" size={24} color="black" />
@@ -162,9 +164,9 @@ const BookingScreen = () => {
                     }}
                     style={{
                       backgroundColor: "#427D71",
-                      width: "100%",
-                      padding: 15,
-                    
+                      width: 120,
+                      padding: 5,
+                      marginHorizontal: 12,
                       marginBottom: 20,
                       borderRadius: 4,
                     }}
@@ -189,5 +191,3 @@ const BookingScreen = () => {
 };
 
 export default BookingScreen;
-
-const styles = StyleSheet.create({});
