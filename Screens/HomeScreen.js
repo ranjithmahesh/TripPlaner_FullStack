@@ -238,7 +238,7 @@ const HomeScreen = () => {
                 marginVertical: 7,
               }}
             >
-              Genius
+              Research
             </Text>
             <Text
               style={{
@@ -248,7 +248,8 @@ const HomeScreen = () => {
                 marginVertical: 7,
               }}
             >
-              Your are at Genius level one in our loyalty program
+              Prioritize destination research to understand culture, activities,
+              and safety
             </Text>
           </Pressable>
           <Pressable
@@ -270,7 +271,7 @@ const HomeScreen = () => {
                 marginVertical: 7,
               }}
             >
-              Genius
+              Itinerary
             </Text>
             <Text
               style={{
@@ -279,7 +280,8 @@ const HomeScreen = () => {
                 marginVertical: 7,
               }}
             >
-              Your are at Genius level one in our loyalty program
+              Plan a flexible itinerary, allowing for spontaneity while covering
+              must-see attractions.
             </Text>
           </Pressable>
           <Pressable
@@ -301,7 +303,7 @@ const HomeScreen = () => {
                 marginVertical: 7,
               }}
             >
-              Genius
+              Travel Insurance
             </Text>
             <Text
               style={{
@@ -310,7 +312,8 @@ const HomeScreen = () => {
                 marginVertical: 7,
               }}
             >
-              Your are at Genius level one in our loyalty program
+              Protect your trip with travel insurance for emergencies and
+              cancellations.
             </Text>
           </Pressable>
         </ScrollView>

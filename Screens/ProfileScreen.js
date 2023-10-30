@@ -29,7 +29,7 @@ const ProfileScreen = () => {
       }}
     >
       <Pressable style={{ marginVertical: 10 }}>
-        <Text>Welcome {userEmail}</Text>
+        <Text style={{ fontSize: 20 , fontWeight:"bold"}}>Welcome {userEmail}</Text>
       </Pressable>
       <Pressable
         onPress={signOutUser}

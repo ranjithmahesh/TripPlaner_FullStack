@@ -53,20 +53,6 @@ const LoginScreen = () => {
       });
   };
 
-  // useEffect(() => {
-  //   try {
-  //     const unsubscribe = auth.onAuthStateChanged((authUser) => {
-  //       if (authUser) {
-  //         navigation.replace("Main");
-  //       }
-  //     });
-
-  //     return unsubscribe;
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, []);
-
   return (
     <SafeAreaView
       style={{

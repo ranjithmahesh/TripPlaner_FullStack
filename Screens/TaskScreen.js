@@ -169,7 +169,6 @@ const TaskScreen = () => {
           </Pressable>
           {/* Destination */}
           <Pressable
-            // onPress={() => navigation.navigate("Search")}
             style={{
               flexDirection: "row",
               alignItems: "center",
@@ -190,8 +189,6 @@ const TaskScreen = () => {
           </Pressable>
 
           {/* Selected Dates */}
-
-          {/* Search Button */}
         </View>
         <View
           style={{

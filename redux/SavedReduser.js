@@ -26,12 +26,6 @@ export const SavedSlice = createSlice({
       }
     },
 
-    // removeFromCart: (state, action) => {
-    //   const removeItem = state.cart.filter((item) => {
-    //     item.id !== action.payload.id;
-    //   });
-    //   state.cart = removeItem;
-    // },
     deleteTask: (state, action) => {
       const { tripId, Id } = action.payload;
       return {

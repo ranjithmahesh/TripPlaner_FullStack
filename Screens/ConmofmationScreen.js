@@ -1,13 +1,11 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useLayoutEffect } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addTrip } from "../redux/SavedReduser";
-import { saveBookings } from "../services/asyncStorageService";
 
 const ConfirmationScreen = () => {
   const route = useRoute();
-  const bookings = useSelector((state) => state.booking.booking);
 
   const navigation = useNavigation();
   useLayoutEffect(() => {
@@ -87,6 +85,7 @@ const ConfirmationScreen = () => {
             flexDirection: "row",
             alignItems: "center",
             gap: 60,
+           
           }}
         >
           <View>
@@ -96,6 +95,7 @@ const ConfirmationScreen = () => {
                 fontWeight: "600",
                 marginBottom: 3,
                 color: "gray",
+                
               }}
             >
               From

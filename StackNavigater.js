@@ -12,6 +12,7 @@ import ProfileScreen from "./Screens/ProfileScreen";
 import RegisterScreen from "./Screens/RegisterScreen";
 
 import TaskScreen from "./Screens/TaskScreen";
+import SplashScreen from "./Screens/SplashScreen";
 
 const StackNavigater = () => {
   const Stack = createNativeStackNavigator();
@@ -73,6 +74,11 @@ const StackNavigater = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="Splash"
+          component={SplashScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Login"
           component={LoginScreen}

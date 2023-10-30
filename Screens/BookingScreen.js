@@ -7,7 +7,7 @@ import { deleteTrip } from "../redux/SavedReduser";
 import { useRoute } from "@react-navigation/native";
 
 const BookingScreen = () => {
-  // console.log("bookings=" + bookings);
+  
   const bookings = useSelector((state) => state.booking.booking);
   const route = useRoute();
 
